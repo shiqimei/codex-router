@@ -1,34 +1,84 @@
-<p align="center">
-  <img src="assets/banner.png" alt="CodexRouter rotating across Codex accounts when quota runs out" width="960">
-</p>
-
-<p align="center">
-  <a href="assets/CodexRouter.mp4"><strong>Watch the 17s demo</strong></a>
-  &nbsp;·&nbsp;
-  macOS · Apple silicon
-</p>
+<div align="center">
 
 # CodexRouter
 
-**Use all your Codex accounts in your favorite Codex desktop.**
+### Use all your Codex accounts in your favorite Codex desktop.
 
 Auto-rotate across Codex accounts when the weekly quota is reached. Stay in the same thread.
 
-The official desktop signs into one Codex account. You probably have more than one — another ChatGPT login, a second seat, Pro and Business. Hit the weekly cap and that thread stops, even if another Codex account still has quota.
+[![Apple Silicon](https://img.shields.io/badge/Apple_Silicon-arm64-181818?style=flat-square&logo=apple&logoColor=white)](#quick-start)
+[![Go](https://img.shields.io/badge/Go-1.26%2B-00ADD8?style=flat-square&logo=go&logoColor=white)](https://go.dev/)
+[![Node](https://img.shields.io/badge/Node-22.12%2B-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Codex desktop](https://img.shields.io/badge/Codex_desktop-26.915.31945-F07818?style=flat-square)](#quick-start)
+[![License](https://img.shields.io/github/license/shiqimei/codex-router?style=flat-square&color=181818)](LICENSE)
+[![Checks](https://img.shields.io/github/actions/workflow/status/shiqimei/codex-router/check.yml?style=flat-square&label=checks)](https://github.com/shiqimei/codex-router/actions/workflows/check.yml)
 
-CodexRouter is that same Codex UI, as a **separate app on your Mac**. Every Codex account sits in the profile menu, and the router rotates between them. Native providers (Grok, Kimi, anything Codex can call) are in the same menu. When one Codex account is out of weekly quota, the next turn rotates to another Codex account that still has room. A native provider in the same menu can take the turn too.
+**[Quick start](#quick-start)** · **[Demo](assets/CodexRouter.mp4)** · **[How it works](#how-it-works)** · **[Architecture](docs/ARCHITECTURE.md)**
 
-| | Official Codex desktop | CodexRouter |
-| --- | --- | --- |
-| Codex accounts | One login | Every Codex account you add, rotated |
-| Weekly cap | The thread dies | Rotate to the next Codex account |
-| Other models | Leave the app | Grok, Kimi, any native Codex provider |
-| Switching | Start a new chat | Same thread, history copied, turn continues |
-| Official app | — | Never modified |
+<img src="assets/banner.png" width="960" alt="CodexRouter rotating across Codex accounts when quota runs out" />
 
-<p align="center"><sub>The banner is an animated GIF named <code>banner.png</code> so it can sit in the README. GitHub often shows only the first frame because the filename ends in <code>.png</code>. Open <a href="assets/CodexRouter.mp4">assets/CodexRouter.mp4</a> if the image does not play.</sub></p>
+<sub>One Codex account hits its weekly cap. The same thread continues on another. GitHub may show only the first frame because <code>banner.png</code> is a GIF. <a href="assets/CodexRouter.mp4">Open the demo</a>.</sub>
 
-## Use it
+</div>
+
+The official desktop signs into one Codex account. Another login can still have quota, and the thread still dies. CodexRouter is that same Codex UI, as a **separate app on your Mac**, and it rotates across the Codex accounts you add. Grok, Kimi, and any other native Codex provider sit in the same menu.
+
+## Rotate, don't restart
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🔁 Rotate Codex accounts
+
+Every Codex account you add shows up in the profile menu with its own weekly remaining quota. New chats pick the account with the most weekly headroom. This is not random round-robin.
+
+</td>
+<td width="50%" valign="top">
+
+### ⏱️ Keep going at the weekly cap
+
+Accounts at 100% on the weekly window or the short window are skipped. A quota, usage-limit, rate-limit, or out-of-credits error rotates to another Codex account and cools the failed one down for five minutes.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 🧵 Stay in the same thread
+
+Switch mid-conversation. History is copied, the thread id stays, and the turn continues. You steer from the normal composer instead of starting a blank chat.
+
+</td>
+<td width="50%" valign="top">
+
+### 🔌 Native providers, same menu
+
+Grok, Kimi, or any native Codex provider can take a turn when that is what still has room. API providers do not get a made-up ChatGPT percentage.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 📊 Quota where you already look
+
+The bottom-left profile menu shows remaining quota, add account, add or edit a provider, and the connection switch. No second window.
+
+</td>
+<td width="50%" valign="top">
+
+### 🛡️ Leave the official app alone
+
+The build copies `/Applications/ChatGPT.app`. It never edits the install you already have, and the copy does not self-update. Do not redistribute OpenAI binaries.
+
+</td>
+</tr>
+</table>
+
+## Quick start
+
+**macOS · Apple silicon · Go 1.26+ · Node 22.12+ · Python 3.11+ · ChatGPT.app already installed**
 
 One prompt. Point your coding agent at **this repository** and paste:
 
@@ -58,22 +108,16 @@ Clone or open this repo, then:
 If this checkout is already CodexRouter, install and verify it. Do not invent a second design.
 ```
 
-That is the whole install path: your agent reads this repo, reuses the mux, and patches a **copy** of your ChatGPT app. You do not run a from-scratch integration.
+Your agent reads this repo, reuses the mux, and patches a **copy** of your ChatGPT app.
 
-After it launches, open the profile menu (bottom-left):
+1. **Add another Codex account** with device-code login. The menu label is **Add another subscription**.
+2. **Add a provider** by pasting native `model` / `model_provider` config. Secrets stay on disk, not in the UI.
+3. **Use the profile menu** (bottom-left) to pick a connection, or switch one mid-thread. The demo hits "You've hit your usage limit", then continues with history intact.
 
-- **Add another Codex account** — device-code login (the menu label is **Add another subscription**).
-- **Add provider** — paste native `model` / `model_provider` config. Secrets stay on disk, not in the UI.
-- Pick a connection for a new chat, or switch one mid-thread. The demo does this: the thread hits "You've hit your usage limit", then continues on another provider with history intact.
+<details>
+<summary><strong>Build it yourself</strong></summary>
 
-## What you actually get
-
-- **One Codex UI for every Codex account.** Each account shows its own weekly remaining quota. Native providers sit in the same menu, without a made-up ChatGPT percentage.
-- **Rotate across Codex accounts when the weekly quota is reached.** Accounts at 100% weekly or short-window usage are skipped. A quota / usage-limit / rate-limit / out-of-credits failure rotates to another Codex account, or a native provider if that is what still has room, and sits out for five minutes. The next new chat prefers the Codex account with the most weekly headroom, not a random spin.
-- **Switch without losing the thread.** Idle threads keep their history. A running turn is interrupted, its rollout is copied, and work continues on the connection you picked. You steer from the normal composer.
-- **Your official app stays official.** The build copies `/Applications/ChatGPT.app`, signs that copy, and disables its self-update. Source only — do not ship the patched app or OpenAI binaries.
-
-Requirements: macOS Apple silicon, Go 1.26+, Node 22.12+, Python 3.11+, Xcode command-line tools, and ChatGPT already installed at `/Applications/ChatGPT.app`. The patch is pinned to desktop **26.915.31945 / build 9922**. A different build stops before install.
+The patch is pinned to desktop **26.915.31945 / build 9922**. A different build stops before install. Quit CodexRouter before replacing a running build. Existing installs are backed up, and account data survives. `Superior.app` remains a compatibility symlink so cached tool paths keep working. The bundle id and `Application Support/Superior` stay as they are on purpose.
 
 ```sh
 npm ci --ignore-scripts
@@ -81,30 +125,43 @@ npm run build:desktop
 open "$HOME/Applications/CodexRouter.app"
 ```
 
-Ad-hoc signing is enough for the routing flows tested on the development machine. Pass `--identity` only if you have a local cert; it does not by itself make Computer Use helpers work on a fresh Mac.
+Ad-hoc signing is enough for the routing flows tested on the development machine. `--identity` selects a local certificate. It does not by itself make Computer Use helpers work on a fresh Mac.
 
 ```sh
 python3 scripts/build_superior.py --identity "Apple Development: Your Name (TEAMID)"
 ```
 
-Quit CodexRouter before replacing a running build. Existing installs are backed up. Account data survives. `Superior.app` remains a compatibility symlink so cached tool paths keep working. Bundle id and `Application Support/Superior` stay as they are on purpose.
+</details>
 
-## How a turn moves
+## How it works
 
 ```text
-Codex desktop UI  →  codex-mux
-                     ├─ official Codex + primary ~/.codex
-                     ├─ official Codex + isolated subscription home
-                     └─ official Codex + native provider config
+Your Mac
+┌──────────────────────────┐
+│ Codex desktop UI         │
+│ profile menu · composer  │
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│ codex-mux                │
+│ quota · handoff · rotate │
+└────────────┬─────────────┘
+             │
+     ┌───────┼────────┐
+     ▼       ▼        ▼
+  primary  another   native
+  ~/.codex  Codex     provider
+            account
 ```
 
 Routing state is `~/.superior/state.json`. Extra homes and provider config live under `~/.superior/accounts/<id>/codex-home`. Credentials are not returned by the account API. Primary credentials stay in `~/.codex`.
 
-A handoff waits out the active turn, copies a portable rollout into the target home, resumes the same thread id, and commits the new owner. Failure before commit restores the source. Account-bound encrypted reasoning is stripped so it is not forwarded to another provider. A continued turn gets a new turn id; in-flight steering for that handoff is remapped. Older copies stay on disk, but only the committed owner is listed.
+A handoff waits out the active turn, copies a portable rollout into the target home, resumes the same thread id, and commits the new owner. Failure before commit restores the source. Account-bound encrypted reasoning is stripped so it is not forwarded to another provider. A continued turn gets a new turn id; in-flight steering for that handoff is remapped. Only the committed owner is listed.
 
-Explicit quota errors take that same path. Anything that is just a tool failure is shown to you and not replayed.
+Explicit quota errors take that same path. A plain tool failure is shown to you and not replayed.
 
-Native provider example:
+<details>
+<summary><strong>Native provider config</strong></summary>
 
 ```toml
 model = "your-model"
@@ -117,35 +174,54 @@ wire_api = "responses"
 env_key = "PROVIDER_API_KEY"
 ```
 
-Put `{"PROVIDER_API_KEY":"..."}` in the provider's environment field. Desktop apps do not inherit `.zshrc`. Leave the field blank on edit to keep stored secrets, or send `{}` to clear them. The config is trusted local Codex configuration, including any credential helper it names. Protocol and model support come from **your** installed Codex binary — CodexRouter does not invent a second model protocol.
+Put `{"PROVIDER_API_KEY":"..."}` in the provider's environment field. Desktop apps do not inherit `.zshrc`. Leave the field blank on edit to keep stored secrets, or enter `{}` to clear them. The config is trusted local Codex configuration, including any credential helper it names. Protocol and model support come from **your** installed Codex binary. CodexRouter does not invent a second model protocol.
 
 Each provider can also own a private `models.json` catalog (`model_catalog_json`). `catalogs/grok2api.models.json` is the local grok2api catalog. The configured default model must appear in that catalog.
 
-## Quota badges
+</details>
 
-- **Codex accounts** — weekly remaining from Codex rate-limit windows, same idea as the upstream account rows. Rotation uses these windows.
-- **Grok / local grok2api** — weighted weekly remaining from that instance's account billing snapshots: `sum(weight × remaining%) / sum(weight)`. Same tier defaults to equal weight; optional `accountWeights` can bias capacity. Missing or expired weekly snapshots stay unavailable instead of being dropped. The tooltip adds cumulative tokens (`SUM(total_tokens)` from `request_audits`, via `sqlite3 -readonly`, never double-counting cached input) and the quota sync time. That token count is every retained audit row on the service, not only CodexRouter traffic, so a narrower dashboard filter will not match. No admin credentials. Bind it in `~/.superior/provider-metrics.json` as `{"type":"grok2api-sqlite","baseUrl":"http://localhost:8000/v1","databasePath":"/absolute/path/to/backend.db"}`. If the endpoint no longer matches, the local badge goes away. A database that cannot be read shows a dash, not a fake zero.
+<details>
+<summary><strong>Quota badges</strong></summary>
+
+- **Codex accounts** — weekly remaining from Codex rate-limit windows. Rotation uses these windows.
+- **Grok / local grok2api** — weighted weekly remaining from that instance's account billing snapshots: `sum(weight × remaining%) / sum(weight)`. Same tier defaults to equal weight; optional `accountWeights` can bias capacity. Missing or expired weekly snapshots stay unavailable instead of being dropped. The tooltip adds cumulative tokens (`SUM(total_tokens)` from `request_audits`, via `sqlite3 -readonly`, never double-counting cached input) and the quota sync time. That count is every retained audit row on the service, not only CodexRouter traffic, so a narrower dashboard filter will not match. No admin credentials. Bind it in `~/.superior/provider-metrics.json` as `{"type":"grok2api-sqlite","baseUrl":"http://localhost:8000/v1","databasePath":"/absolute/path/to/backend.db"}`. If the endpoint no longer matches, the local badge goes away. A database that cannot be read shows a dash, not a fake zero.
 - **Kimi Code** — official `api.kimi.ai` / `api.kimi.com` coding hosts only. Weekly remaining comes from `/coding/v1/usages` (`usages.limit_7d.used_ratio`, or the legacy weekly limit). The 5-hour window is not substituted for the weekly number. Redirects are rejected.
 - **Everyone else** — an API badge. Missing credentials or a bad response means "unavailable", not 0% or 100%.
 
 `internal/provideradapter` is the extension point: `Match` + `Read` → a shared `Usage` value. The mux caches and dedupes; the menu only formats.
 
-## Check your build
+</details>
+
+## Build with us
+
+Found a rough edge? [Open an issue](https://github.com/shiqimei/codex-router/issues). Have an improvement? [Send a pull request](https://github.com/shiqimei/codex-router/pulls).
 
 ```sh
 npm run check       # race-enabled Go tests, vet, JS and Python syntax
 npm run test:e2e    # real official app-server, isolated homes, scripted providers
+```
+
+<details>
+<summary><strong>Live checks</strong></summary>
+
+```sh
 npm run test:live   # opt-in, spends real quota on canary chats only
 ```
 
-`test:live` copies existing local credentials into private temp homes and deletes those copies when it finishes. It never sends your real conversations. Details, Computer Use limits, and what is intentionally not claimed: [docs/VALIDATION.md](docs/VALIDATION.md), [docs/COMPUTER-USE-REGRESSION.md](docs/COMPUTER-USE-REGRESSION.md).
+`test:live` copies existing local credentials into private temp homes and deletes those copies when it finishes. It never sends your real conversations. Keep tokens out of commits and logs.
 
-Design notes: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Files in `docs/upstream` are historical reference, not current claims.
+What is verified, and what is not: [docs/VALIDATION.md](docs/VALIDATION.md), [docs/COMPUTER-USE-REGRESSION.md](docs/COMPUTER-USE-REGRESSION.md). Design notes: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Files in `docs/upstream` are historical reference, not current claims.
 
-## Credit and boundaries
+</details>
 
-The multiplexer, subscription login, and account menu started as MIT code from [b-nnett/codex-subscription-router](https://github.com/b-nnett/codex-subscription-router). Provenance is in [NOTICE.md](NOTICE.md). This repo adds provider profiles, explicit routing, mid-thread handoff, quota failover, and the desktop patch for build 9922.
+## License
 
-CodexRouter is not affiliated with OpenAI. ChatGPT, Codex, and OpenAI names are used only to say what this copy talks to. You are responsible for the terms of the ChatGPT app on your machine and of every subscription you connect.
+[MIT](LICENSE). The multiplexer, subscription login, and account menu started as MIT code from [b-nnett/codex-subscription-router](https://github.com/b-nnett/codex-subscription-router). Provenance is in [NOTICE.md](NOTICE.md). This repo adds provider profiles, explicit routing, mid-thread handoff, rotation across Codex accounts, and the desktop patch for build 9922.
+
+CodexRouter is not affiliated with OpenAI. ChatGPT, Codex, and OpenAI names say what this copy talks to. You are responsible for the terms of the ChatGPT app on your machine and of every account you connect.
 
 Do not open a pull request that adds API keys, account homes, or a built `CodexRouter.app`.
+
+---
+
+**If CodexRouter keeps your threads moving, give it a star. ⭐**
