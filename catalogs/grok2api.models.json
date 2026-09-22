@@ -1,0 +1,329 @@
+{
+  "models": [
+    {
+      "slug": "grok-4.5",
+      "display_name": "Grok 4.5",
+      "description": "xAI Grok 4.5 frontier model with reasoning and vision.",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Fast responses with lighter reasoning"
+        },
+        {
+          "effort": "medium",
+          "description": "Balances speed and reasoning depth for everyday tasks"
+        },
+        {
+          "effort": "high",
+          "description": "Greater reasoning depth for complex problems"
+        }
+      ],
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "minimal_client_version": "0.0.0",
+      "supported_in_api": true,
+      "priority": 1,
+      "additional_speed_tiers": [],
+      "service_tiers": [],
+      "default_service_tier": null,
+      "availability_nux": null,
+      "upgrade": null,
+      "base_instructions": "You are Codex, a coding agent. Follow the user's instructions and use the available tools to complete software engineering tasks. Inspect relevant files before editing, preserve unrelated changes, and verify the result.",
+      "model_messages": null,
+      "include_skills_usage_instructions": false,
+      "supports_reasoning_summary_parameter": true,
+      "supports_reasoning_summaries": true,
+      "default_reasoning_summary": "auto",
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": "freeform",
+      "web_search_tool_type": "text",
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "supports_image_detail_original": false,
+      "context_window": 500000,
+      "max_context_window": 500000,
+      "auto_compact_token_limit": null,
+      "effective_context_window_percent": 95,
+      "experimental_supported_tools": [],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_search_tool": false,
+      "use_responses_lite": false
+    },
+    {
+      "slug": "grok-4.6",
+      "display_name": "Grok 4.6",
+      "description": "xAI Grok 4.6 frontier model with reasoning and vision.",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Fast responses with lighter reasoning"
+        },
+        {
+          "effort": "medium",
+          "description": "Balances speed and reasoning depth for everyday tasks"
+        },
+        {
+          "effort": "high",
+          "description": "Greater reasoning depth for complex problems"
+        },
+        {
+          "effort": "xhigh",
+          "description": "Extra high reasoning depth for complex problems"
+        }
+      ],
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "minimal_client_version": "0.0.0",
+      "supported_in_api": true,
+      "priority": 2,
+      "additional_speed_tiers": [],
+      "service_tiers": [],
+      "default_service_tier": null,
+      "availability_nux": null,
+      "upgrade": null,
+      "base_instructions": "You are Codex, a coding agent. Follow the user's instructions and use the available tools to complete software engineering tasks. Inspect relevant files before editing, preserve unrelated changes, and verify the result.",
+      "model_messages": null,
+      "include_skills_usage_instructions": false,
+      "supports_reasoning_summary_parameter": true,
+      "supports_reasoning_summaries": true,
+      "default_reasoning_summary": "auto",
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": "freeform",
+      "web_search_tool_type": "text",
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "supports_image_detail_original": false,
+      "context_window": 500000,
+      "max_context_window": 500000,
+      "auto_compact_token_limit": null,
+      "effective_context_window_percent": 95,
+      "experimental_supported_tools": [],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_search_tool": false,
+      "use_responses_lite": false
+    },
+    {
+      "slug": "grok-4.7",
+      "display_name": "Grok 4.7",
+      "description": "Grok model served via grok2api.",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Light reasoning"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning"
+        },
+        {
+          "effort": "high",
+          "description": "Deep reasoning"
+        },
+        {
+          "effort": "xhigh",
+          "description": "Extra high reasoning"
+        }
+      ],
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "minimal_client_version": "0.0.0",
+      "supported_in_api": true,
+      "priority": 3,
+      "additional_speed_tiers": [],
+      "service_tiers": [],
+      "default_service_tier": null,
+      "availability_nux": null,
+      "upgrade": null,
+      "base_instructions": "You are Codex, a coding agent. Follow the user's instructions and use the available tools to complete software engineering tasks. Inspect relevant files before editing, preserve unrelated changes, and verify the result.",
+      "model_messages": null,
+      "include_skills_usage_instructions": false,
+      "supports_reasoning_summary_parameter": true,
+      "supports_reasoning_summaries": true,
+      "default_reasoning_summary": "auto",
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": "freeform",
+      "web_search_tool_type": "text",
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "supports_image_detail_original": false,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "effective_context_window_percent": 95,
+      "experimental_supported_tools": [],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_search_tool": false,
+      "use_responses_lite": false
+    },
+    {
+      "slug": "grok-4.7-build-fast",
+      "display_name": "Grok 4.7 Build Fast",
+      "description": "Grok model served via grok2api.",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [
+        {
+          "effort": "none",
+          "description": "No reasoning"
+        }
+      ],
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "minimal_client_version": "0.0.0",
+      "supported_in_api": true,
+      "priority": 4,
+      "additional_speed_tiers": [],
+      "service_tiers": [],
+      "default_service_tier": null,
+      "availability_nux": null,
+      "upgrade": null,
+      "base_instructions": "You are Codex, a coding agent. Follow the user's instructions and use the available tools to complete software engineering tasks. Inspect relevant files before editing, preserve unrelated changes, and verify the result.",
+      "model_messages": null,
+      "include_skills_usage_instructions": false,
+      "supports_reasoning_summary_parameter": false,
+      "supports_reasoning_summaries": false,
+      "default_reasoning_summary": "auto",
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": "freeform",
+      "web_search_tool_type": "text",
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "supports_image_detail_original": false,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "effective_context_window_percent": 95,
+      "experimental_supported_tools": [],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_search_tool": false,
+      "use_responses_lite": false
+    },
+    {
+      "slug": "grok-composer-2.5-fast",
+      "display_name": "Grok Composer 2.5 Fast",
+      "description": "xAI Grok Composer 2.5 model.",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [
+        {
+          "effort": "none",
+          "description": "No reasoning"
+        }
+      ],
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "minimal_client_version": "0.0.0",
+      "supported_in_api": true,
+      "priority": 5,
+      "additional_speed_tiers": [],
+      "service_tiers": [],
+      "default_service_tier": null,
+      "availability_nux": null,
+      "upgrade": null,
+      "base_instructions": "You are Codex, a coding agent. Follow the user's instructions and use the available tools to complete software engineering tasks. Inspect relevant files before editing, preserve unrelated changes, and verify the result.",
+      "model_messages": null,
+      "include_skills_usage_instructions": false,
+      "supports_reasoning_summary_parameter": false,
+      "supports_reasoning_summaries": false,
+      "default_reasoning_summary": "auto",
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": "freeform",
+      "web_search_tool_type": "text",
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "supports_image_detail_original": false,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "effective_context_window_percent": 95,
+      "experimental_supported_tools": [],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_search_tool": false,
+      "use_responses_lite": false
+    },
+    {
+      "slug": "grok-imagine-video-1.5",
+      "display_name": "Grok Imagine Video 1.5",
+      "description": "Grok model served via grok2api.",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [
+        {
+          "effort": "none",
+          "description": "No reasoning"
+        }
+      ],
+      "shell_type": "shell_command",
+      "visibility": "hide",
+      "minimal_client_version": "0.0.0",
+      "supported_in_api": true,
+      "priority": 6,
+      "additional_speed_tiers": [],
+      "service_tiers": [],
+      "default_service_tier": null,
+      "availability_nux": null,
+      "upgrade": null,
+      "base_instructions": "You are Codex, a coding agent. Follow the user's instructions and use the available tools to complete software engineering tasks. Inspect relevant files before editing, preserve unrelated changes, and verify the result.",
+      "model_messages": null,
+      "include_skills_usage_instructions": false,
+      "supports_reasoning_summary_parameter": false,
+      "supports_reasoning_summaries": false,
+      "default_reasoning_summary": "auto",
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": false,
+      "supports_image_detail_original": false,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "effective_context_window_percent": 95,
+      "experimental_supported_tools": [],
+      "input_modalities": [
+        "text"
+      ],
+      "supports_search_tool": false,
+      "use_responses_lite": false
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+const vm=require('node:vm'),fs=require('node:fs'),assert=require('node:assert/strict');
+const code=fs.readFileSync(process.argv[2],'utf8');
+const start=code.indexOf('function O9n('),end=code.indexOf('function A9n(',start);
+assert.ok(start>0&&end>start);
+const context=vm.createContext({UXn:e=>['none','low','high','max'].includes(e)});
+vm.runInContext(code.slice(start,end),context);
+const filter=vm.runInContext('O9n',context);
+const models=[{model:'grok-4.7',hidden:false,isDefault:true,supportedReasoningEfforts:[{reasoningEffort:'none'}]}];
+const result=filter({availableModels:new Set(),enabledReasoningEfforts:new Set(['high']),hasConfiguredModelCatalog:true,isCustomModelProvider:true,includeUltraReasoningEffort:true,models});
+assert.equal(result.models.length,1);
+assert.equal(result.models[0].supportedReasoningEfforts[0].reasoningEffort,'none');
+console.log('PASS native catalog filtering preserves custom reasoning levels');

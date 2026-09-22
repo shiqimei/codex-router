@@ -1,0 +1,26 @@
+{
+  "name": "codex-router",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Native Codex subscription and provider router",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "check": "go test -race ./... && go vet ./... && npm run check:js && npm run check:python && npm run check:computer-use",
+    "check:js": "node --check ui/account-menu.js && node --check ui/native-provider.js && node tests/ui/events.cjs && node tests/ui/quota-label.cjs",
+    "check:python": "python3 -m py_compile scripts/build_superior.py scripts/native_ui.py tests/e2e/routing.py tests/e2e/live.py tests/e2e/computer_use.py tests/e2e/live_history_regression.py tests/e2e/live_vision.py",
+    "build": "go build -trimpath -o build/codex-mux ./cmd/codex-mux",
+    "build:desktop": "python3 scripts/build_superior.py",
+    "test:e2e": "npm run build && python3 tests/e2e/routing.py",
+    "test:live": "npm run build && python3 tests/e2e/live.py",
+    "test:computer-use": "python3 tests/e2e/computer_use.py",
+    "check:computer-use": "python3 -m unittest discover -s tests/e2e -p test_computer_use.py",
+    "test:live-history": "npm run build && python3 tests/e2e/live_history_regression.py",
+    "test:live-vision": "npm run build && python3 tests/e2e/live_vision.py"
+  },
+  "devDependencies": {
+    "@electron/asar": "4.2.1"
+  }
+}
