@@ -2,9 +2,9 @@
 
 # CodexRouter
 
-### Use all your Codex accounts in your favorite Codex desktop.
+### Use all your subscriptions in your favorite Codex desktop.
 
-Auto-rotate across Codex accounts when the weekly quota is reached. Stay in the same thread.
+Auto-rotate when the weekly quota is reached — across Codex accounts, and across other model providers. Stay in the same thread.
 
 [![Apple Silicon](https://img.shields.io/badge/Apple_Silicon-arm64-181818?style=flat-square&logo=apple&logoColor=white)](#quick-start)
 [![Go](https://img.shields.io/badge/Go-1.26%2B-00ADD8?style=flat-square&logo=go&logoColor=white)](https://go.dev/)
@@ -17,11 +17,11 @@ Auto-rotate across Codex accounts when the weekly quota is reached. Stay in the 
 
 <img src="assets/banner.png" width="960" alt="CodexRouter rotating across Codex accounts when quota runs out" />
 
-<sub>One Codex account hits its weekly cap. The same thread continues on another. GitHub may show only the first frame because <code>banner.png</code> is a GIF. <a href="assets/CodexRouter.mp4">Open the demo</a>.</sub>
+<sub>One subscription hits its weekly cap. The same thread continues on another Codex account, or on another model provider. GitHub may show only the first frame because <code>banner.png</code> is a GIF. <a href="assets/CodexRouter.mp4">Open the demo</a>.</sub>
 
 </div>
 
-The official desktop signs into one Codex account. Another login can still have quota, and the thread still dies. CodexRouter is that same Codex UI, as a **separate app on your Mac**, and it rotates across the Codex accounts you add. Grok, Kimi, and any other native Codex provider sit in the same menu.
+The official desktop signs into one subscription. Hit the weekly cap and the thread stops, even if another Codex account still has quota. CodexRouter is that same Codex UI, as a **separate app on your Mac**. It rotates across the Codex accounts you add, and it also switches the same thread to other model providers — Grok, Kimi, or any native Codex provider — without leaving the app.
 
 ## Rotate, don't restart
 
