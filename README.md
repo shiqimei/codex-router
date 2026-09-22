@@ -17,7 +17,7 @@ Auto-rotate when the weekly quota is reached — across Codex accounts, and acro
 
 <img src="assets/banner.png" width="960" alt="CodexRouter rotating across Codex accounts when quota runs out" />
 
-<sub>One subscription hits its weekly cap. The same thread continues on another Codex account, or on another model provider. GitHub may show only the first frame because <code>banner.png</code> is a GIF. <a href="assets/CodexRouter.mp4">Open the demo</a>.</sub>
+<sub>One subscription hits its weekly cap. The same thread continues on another Codex account, or on another model provider. <a href="assets/CodexRouter.mp4">Open the demo</a>.</sub>
 
 </div>
 
