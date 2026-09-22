@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="CodexRouter: quota menu, then the same thread continues on another provider after the usage limit" width="960">
+  <img src="assets/banner.png" alt="CodexRouter rotating across Codex accounts when quota runs out" width="960">
 </p>
 
 <p align="center">
@@ -10,18 +10,18 @@
 
 # CodexRouter
 
-**Use all your coding-plan subscriptions in your favorite Codex desktop.**
+**Use all your Codex accounts in your favorite Codex desktop.**
 
-Auto-rotate accounts when the weekly quota is reached. Stay in the same thread.
+Auto-rotate across Codex accounts when the weekly quota is reached. Stay in the same thread.
 
-You already pay for more than one coding plan — Pro, Business, Grok, Kimi, whatever Codex can talk to. The official desktop only signs into one of them. Hit the weekly cap and the conversation stops.
+The official desktop signs into one Codex account. You probably have more than one — another ChatGPT login, a second seat, Pro and Business. Hit the weekly cap and that thread stops, even if another Codex account still has quota.
 
-CodexRouter is that same Codex UI, as a **separate app on your Mac**, with every subscription and native provider in the profile menu. When one account is out of weekly quota, the next turn continues somewhere that still has room.
+CodexRouter is that same Codex UI, as a **separate app on your Mac**. Every Codex account sits in the profile menu, and the router rotates between them. Native providers (Grok, Kimi, anything Codex can call) are in the same menu. When one Codex account is out of weekly quota, the next turn rotates to another Codex account that still has room. A native provider in the same menu can take the turn too.
 
 | | Official Codex desktop | CodexRouter |
 | --- | --- | --- |
-| Logins | One ChatGPT account | Every subscription you add |
-| Weekly cap | The thread dies | Fail over to the next account |
+| Codex accounts | One login | Every Codex account you add, rotated |
+| Weekly cap | The thread dies | Rotate to the next Codex account |
 | Other models | Leave the app | Grok, Kimi, any native Codex provider |
 | Switching | Start a new chat | Same thread, history copied, turn continues |
 | Official app | — | Never modified |
@@ -41,13 +41,13 @@ Clone or open this repo, then:
 
 2. Reuse these paths instead of rewriting them: cmd/codex-mux, internal/mux, internal/state, internal/provideradapter, ui/, scripts/build_superior.py. Keep the MIT attribution to b-nnett/codex-subscription-router in NOTICE.md and LICENSE.
 
-3. Support many ChatGPT coding-plan subscriptions and native Codex providers in one desktop. A provider is native Codex config: model, model_provider, and [model_providers.<id>], plus optional environment variables stored privately and injected only into that provider's Codex process.
+3. Support many Codex accounts in one desktop, and rotate between them. Also support native Codex providers. A provider is native Codex config: model, model_provider, and [model_providers.<id>], plus optional environment variables stored privately and injected only into that provider's Codex process. Account rotation is the main path, not an extra.
 
-4. Put connections in the bottom-left profile menu: remaining quota, add subscription (device-code login), add / edit / delete provider, enable or disable, switch the active connection. API providers must not show a made-up ChatGPT percentage. New chats pick the best enabled connection by weekly urgency. Skip accounts already at 100% on the weekly window or the short window. This is not random round-robin.
+4. Put connections in the bottom-left profile menu: remaining quota per Codex account, add another Codex account (device-code login), add / edit / delete provider, enable or disable, switch the active connection. API providers must not show a made-up ChatGPT percentage. New chats pick the best enabled Codex account by weekly urgency. Skip accounts already at 100% on the weekly window or the short window. This is not random round-robin.
 
 5. Allow a switch inside an existing thread. Copy the drained history to the target home, keep the thread id, and continue the turn there. If resume fails, restore the source. Do not start a blank chat.
 
-6. Auto-rotate when quota is exhausted. If a turn fails with a quota, usage-limit, rate-limit, or out-of-credits error, fail over to another enabled connection and cool the failed account down for 5 minutes. Do not auto-replay arbitrary tool failures. Interrupted shell commands may already have side effects; only conversation state is preserved.
+6. Auto-rotate across Codex accounts when quota is exhausted. If a turn fails with a quota, usage-limit, rate-limit, or out-of-credits error, rotate to another enabled Codex account (a native provider is also eligible) and cool the failed account down for 5 minutes. Do not auto-replay arbitrary tool failures. Interrupted shell commands may already have side effects; only conversation state is preserved.
 
 7. Stay on the desktop build this repo pins (26.915.31945 / build 9922, including its ASAR hash and menu anchors) unless you re-verify those anchors. Unknown builds must stop before install. Self-update stays disabled in the copy. Account data under the existing Superior profile must survive a rebuild.
 
@@ -62,14 +62,14 @@ That is the whole install path: your agent reads this repo, reuses the mux, and 
 
 After it launches, open the profile menu (bottom-left):
 
-- **Add another subscription** — Codex device-code login.
+- **Add another Codex account** — device-code login (the menu label is **Add another subscription**).
 - **Add provider** — paste native `model` / `model_provider` config. Secrets stay on disk, not in the UI.
 - Pick a connection for a new chat, or switch one mid-thread. The demo does this: the thread hits "You've hit your usage limit", then continues on another provider with history intact.
 
 ## What you actually get
 
-- **One Codex UI for every plan you pay for.** Subscriptions and native providers show up as connections, with weekly remaining quota where the upstream reports it.
-- **Auto-rotate when the weekly quota is reached.** Accounts at 100% weekly or short-window usage are skipped. A quota / usage-limit / rate-limit / out-of-credits failure fails over and sits out for five minutes. The next new chat prefers the connection with the most weekly headroom, not a random spin.
+- **One Codex UI for every Codex account.** Each account shows its own weekly remaining quota. Native providers sit in the same menu, without a made-up ChatGPT percentage.
+- **Rotate across Codex accounts when the weekly quota is reached.** Accounts at 100% weekly or short-window usage are skipped. A quota / usage-limit / rate-limit / out-of-credits failure rotates to another Codex account, or a native provider if that is what still has room, and sits out for five minutes. The next new chat prefers the Codex account with the most weekly headroom, not a random spin.
 - **Switch without losing the thread.** Idle threads keep their history. A running turn is interrupted, its rollout is copied, and work continues on the connection you picked. You steer from the normal composer.
 - **Your official app stays official.** The build copies `/Applications/ChatGPT.app`, signs that copy, and disables its self-update. Source only — do not ship the patched app or OpenAI binaries.
 
@@ -123,7 +123,7 @@ Each provider can also own a private `models.json` catalog (`model_catalog_json`
 
 ## Quota badges
 
-- **ChatGPT subscriptions** — weekly remaining from Codex rate-limit windows, same idea as the upstream account rows.
+- **Codex accounts** — weekly remaining from Codex rate-limit windows, same idea as the upstream account rows. Rotation uses these windows.
 - **Grok / local grok2api** — weighted weekly remaining from that instance's account billing snapshots: `sum(weight × remaining%) / sum(weight)`. Same tier defaults to equal weight; optional `accountWeights` can bias capacity. Missing or expired weekly snapshots stay unavailable instead of being dropped. The tooltip adds cumulative tokens (`SUM(total_tokens)` from `request_audits`, via `sqlite3 -readonly`, never double-counting cached input) and the quota sync time. That token count is every retained audit row on the service, not only CodexRouter traffic, so a narrower dashboard filter will not match. No admin credentials. Bind it in `~/.superior/provider-metrics.json` as `{"type":"grok2api-sqlite","baseUrl":"http://localhost:8000/v1","databasePath":"/absolute/path/to/backend.db"}`. If the endpoint no longer matches, the local badge goes away. A database that cannot be read shows a dash, not a fake zero.
 - **Kimi Code** — official `api.kimi.ai` / `api.kimi.com` coding hosts only. Weekly remaining comes from `/coding/v1/usages` (`usages.limit_7d.used_ratio`, or the legacy weekly limit). The 5-hour window is not substituted for the weekly number. Redirects are rejected.
 - **Everyone else** — an API badge. Missing credentials or a bad response means "unavailable", not 0% or 100%.
